@@ -1,0 +1,1 @@
+export default (cardId, rackId) => ({ type: 'ADD_CARD_ID', payload: { cardId, rackId } })

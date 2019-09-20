@@ -1,0 +1,1 @@
+export default (rackId, boardId) => ({ type: 'ADD_RACK_ID', payload: { rackId, boardId } })

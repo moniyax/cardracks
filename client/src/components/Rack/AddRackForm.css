@@ -1,0 +1,6 @@
+.rackNameInput {
+    min-width: 80%;
+    padding: 5px;
+    font-size: 15px;
+    flex-grow: 1;
+}

@@ -1,0 +1,1 @@
+export default () => ({type: 'UI_EXIT_ADDING_BOARD'})
