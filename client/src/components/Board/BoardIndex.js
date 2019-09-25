@@ -23,7 +23,6 @@ const BoardContainer = styled.a`
 
 const Board = ({ title, id }) => {
     const path = "boards/" + id
-    console.log();
     
     return <BoardContainer href={path}>
         <div>{title}</div>
@@ -38,8 +37,6 @@ const Boards = ({ boards }) => {
 
         {Object.keys(boards).map(id => {
             const board = boards[id]
-            console.log('board.id',board.id);
-            
             return <Board key={board.id} title={board.title} id={board.id} />
         })}
     </BoardsContainer>

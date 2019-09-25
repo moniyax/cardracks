@@ -23,9 +23,6 @@ export default (type, src, dest) => {
                 break;
         }
     } else {
-        console.log('src.droppableId',src.droppableId);
-        console.log('dest.droppableId',dest.droppableId);
-        
         switch (type) {
             
             case 'card':

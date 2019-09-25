@@ -55,12 +55,8 @@ const racksReducer = (state = {}, action) => {
             const currentRack = state[action.payload.rackId]
             return { ...state, [action.payload.rackId]: rackReducer(currentRack, action) }
         case 'MOVE_CARD_ID_TO_RACK':
-            console.log(' {srcRackId, destRackId, srcIndex, destIndex}', action.payload);
-
             const { srcRackId, destRackId, srcIndex, destIndex } = action.payload
             const srcRack = state[srcRackId]
-            console.log('srcRack', srcRack);
-            
             const cardId = state[srcRackId].cardIds[srcIndex]
             return {
                 ...state,
@@ -79,14 +75,8 @@ const deleteCardFromRack = (index, rack) => {
 }
 
 const insertCard = (cardId, index, rack) => {
-    console.log('rack.cardIds',rack.cardIds);
-    console.log('cardId',cardId);
-    
     const cardIds = rack.cardIds
     const inserted = [...cardIds.slice(0, index), cardId, ...cardIds.slice(index)]
-    console.log('cardIds',cardIds);
-    console.log('inserted',inserted);
-    
     return { ...rack, cardIds: inserted }
 
 }

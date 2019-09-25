@@ -33,8 +33,6 @@ const initState = {
 saveState(initState)
 
 Store.subscribe(throttle(() => {
-  console.log('saving...');
-
   const appState = {
     boardIds: Store.getState().boardIds,
     boards: Store.getState().boards,

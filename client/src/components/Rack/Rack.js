@@ -40,7 +40,6 @@ class Rack extends Component {
 
     render() { 
         const { title, id, cardIds, cards, index } = this.props
-        console.log('cardIds', cardIds);
 
         return <RackWrapper>
             <Draggable

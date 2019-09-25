@@ -42,7 +42,6 @@ overflow-x: auto;
 class ShowBoard extends Component {
 
     onDragEnd (data) {
-        console.log('data', data)
         this.props.moveItem(data.type,data.source, data.destination)
     }
 

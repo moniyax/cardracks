@@ -40,7 +40,7 @@ class App extends Component {
   componentDidMount() {
     window.fetch('/api/boards')
       .then(response => response.json())
-      .then(json => console.log(json))
+      .then(json => console.log('Boards',json))
       .catch(error => console.log(error));
   }
   render() {
@@ -59,21 +59,5 @@ class App extends Component {
   </AppC>
   }
 }
-
-// export default () => (
-//   <App>
-//     <Header>
-//       <Left></Left>
-//       <Title>CardsInRacks</Title>
-//       <Right></Right>
-
-//     </Header>
-//     <Switch>
-//       <Route path='/' exact component={BoardIndex} />
-//       <Route path='/boards/:id' component={ShowBoard} />
-//       <Route component={NotFound} />
-//     </Switch>
-//   </App>
-// )
 
 export default App;
