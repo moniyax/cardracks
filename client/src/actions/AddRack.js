@@ -1,4 +1,4 @@
-import uuid from 'uuid/v1'
+import uuid from 'uuid/v4'
 import addRackId from './AddRackId'
 
 export default (title, boardId) => dispatch => {
