@@ -26,7 +26,7 @@ const AddRackForm = props => {
     const { handleSubmit } = props
     return (
         <form onSubmit={handleSubmit}>
-            <Field className="rackNameInput" name="rackName" component="input" type="text" placeholder="rack name goes here"/>
+            <Field className="rackNameInput" name="rackName" component="input" type="text" placeholder="Enter the rack name"/>
 
             <AddRackButtons >
                 <AddRackCancelButton >

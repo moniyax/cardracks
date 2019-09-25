@@ -7,23 +7,23 @@ import AddRackForm from "./AddRackForm";
 import uiAddingRack from "../../actions/UIAddingRack";
 
 const AddRackContainer = styled.div`
-    border: 1px solid #ddd;
+    border: 1px solid #ddddddd9;
     min-width: 100px;
     width: 100px;
     height: 80px;
     margin: 20px;
     padding: 20px;
     border-radius: 10px;
-    background: blue;
+    background: #0000000f;
     color: #eee;
 `
 
 const AddRackEditWrapper = styled.div`
-    border: 1px solid #ddd;
+    border: 1px solid #ddddddd9;
     height: 80px;
     padding: 20px;
     border-radius: 10px;
-    background: lightGreen;
+    background: #0000000f;
     color: #ebecf0;
     display: flex;
     flex-wrap: wrap;
