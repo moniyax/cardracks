@@ -15,6 +15,7 @@ const RackC = styled.div`
     display: flex;
     flex-direction: column;
     min-width: 240px;
+    max-width: 240px;
     margin: 0px 10px 0 0;
     border: 1px solid #ddd;
     border-radius: 5px;
