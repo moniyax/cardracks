@@ -2,15 +2,14 @@ import { createStore, applyMiddleware, } from 'redux'
 import rootReducer from './reducers/RootReducer'
 import logger from 'redux-logger'
 import { loadState, saveState } from './LocalStorageSync';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import throttle from 'lodash.throttle'
 import thunk from 'redux-thunk';
-import addBoard from "./actions/AddBoard";
+import promise from "redux-promise";
 
-const middlewares = [thunk];
+const middleware = [thunk,promise,];
 
 if (process.env.NODE_ENV === `development`) {
-  middlewares.push(logger);
+  middleware.push(logger);
 }
 
 const persistedState = loadState();
@@ -18,7 +17,7 @@ const persistedState = loadState();
 const Store = createStore(
   rootReducer,
   persistedState,
-  applyMiddleware(...middlewares),
+  applyMiddleware(...middleware),
 );
 
 

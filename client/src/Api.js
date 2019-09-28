@@ -1,0 +1,1 @@
+export const getBoards = () => { return fetch('/api/boards') }

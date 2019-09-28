@@ -10,6 +10,8 @@ const boardsReducer = (state = {}, action) => {
             return { ...state, [action.payload.boardId]: boardReducer(state[action.payload.boardId], action) }
         case 'MOVE_RACK_ID':
             return { ...state, [action.payload.boardId]: boardReducer(state[action.payload.boardId], action) }
+        case 'RECEIVE_BOARDS':
+            return action.payload.entities.boards;
         default:
             return state
     }
@@ -37,6 +39,8 @@ const boardIdsReducer = (state = [], action) => {
     switch (action.type) {
         case 'ADD_BOARD_ID':
             return [...state, action.payload.id]
+        case 'RECEIVE_BOARDS':
+            return action.payload.result;
         default:
             return state
     }

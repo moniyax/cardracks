@@ -9,6 +9,8 @@ import uiExitAddingBoard from './actions/uiExitAddingBoard'
 import uiAddingRack from './actions/UIAddingRack'
 import uiExitAddingRack from './actions/UIExitAddingRack'
 import thunk from 'redux-thunk';
+import promise from 'redux-promise';
+import receiveBoards from './actions/ReceiveBoards'
 
 // ADD_BOARD
 
@@ -362,3 +364,19 @@ test('moving cards between racks', () => {
     expect(Store.getState().racks[rackId2].cardIds.length).toBe(2)
 })
 
+test('receive todos', () => {
+    const Store = createStore(rootReducer, applyMiddleware(thunk,promise))
+    Store.dispatch(addBoard('some board'))
+    Store.dispatch(receiveBoards([{id:1, title: 'some board'},{id:2, title: 'another board'}]))
+    expect(Store.getState().boardIds.length).toBe(2)
+    expect(Object.keys(Store.getState().boards).length).toBe(2)
+})
+
+test('receive todos', () => {
+    const Store = createStore(rootReducer, applyMiddleware(thunk,promise))
+    Store.dispatch(addBoard('some board'))
+    const boardId = Store.getState().boardIds[0]
+    Store.dispatch(receiveBoards([{id:1, title: 'some board'},{id:2, title: 'another board'}]))
+    expect(Store.getState().boardIds.length).toBe(2)
+    expect(Object.keys(Store.getState().boards).length).toBe(2)
+}) 

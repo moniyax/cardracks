@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import AddBoard from "./AddBoard"
+import fetchBoards from "../../actions/FetchBoards"
 
 const BoardsContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     background-color: #fff;
     height: 100%;
+    align-content: start;
 `
 
 const BoardContainer = styled.a`
@@ -23,23 +25,31 @@ const BoardContainer = styled.a`
 
 const Board = ({ title, id }) => {
     const path = "boards/" + id
-    
+
     return <BoardContainer href={path}>
         <div>{title}</div>
     </BoardContainer>
 }
 
 
+class Boards extends Component {
+    componentDidMount() {
+        this.props.fetchBoards()
+        console.log('componentDidMount');
+        
+    }
 
-const Boards = ({ boards }) => {
-    return <BoardsContainer>
-        <AddBoard />
+    render() {
+        const { boards } = this.props;
+        return <BoardsContainer>
+            <AddBoard />
 
-        {Object.keys(boards).map(id => {
-            const board = boards[id]
-            return <Board key={board.id} title={board.title} id={board.id} />
-        })}
-    </BoardsContainer>
+            {Object.keys(boards).map(id => {
+                const board = boards[id]
+                return <Board key={board.id} title={board.title} id={board.id} />
+            })}
+        </BoardsContainer>
+    }
 }
 
-export default connect(({ boards }) => ({ boards }))(Boards)
+export default connect(({ boards }) => ({ boards }), {fetchBoards:fetchBoards})(Boards)

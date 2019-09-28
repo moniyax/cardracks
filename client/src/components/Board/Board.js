@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import AddRack from '../Rack/AddRack'
 import Rack from '../Rack/Rack'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable,  } from 'react-beautiful-dnd'
 import moveItem from "../../actions/MoveItem"
 
-const Board = styled.div`
+const BoardC = styled.div`
     display: flex;
     flex-direction: column;
     background: #00aecc;
@@ -39,8 +39,7 @@ overflow-x: auto;
 
 
 `
-class ShowBoard extends Component {
-
+class Board extends Component {
     onDragEnd (data) {
         this.props.moveItem(data.type,data.source, data.destination)
     }
@@ -50,7 +49,7 @@ class ShowBoard extends Component {
         const board = boards[match.params.id]
         const { title, rackIds } = board
 
-        return  <Board >
+        return  <BoardC >
             <BoardHeader>
                 <BoardName>{title}</BoardName>
             </BoardHeader>
@@ -78,10 +77,10 @@ class ShowBoard extends Component {
                         </Racks>)}
                 </Droppable>
             </DragDropContext>
-        </Board>
+        </BoardC>
     }
 }
 
 const mapStateToProps = ({ boards, racks }) => ({ boards, racks })
 
-export default connect(mapStateToProps, {moveItem: moveItem})(ShowBoard)
+export default connect(mapStateToProps, {moveItem: moveItem})(Board)
