@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_23_211554) do
+ActiveRecord::Schema.define(version: 2019_09_28_211904) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -44,12 +44,7 @@ ActiveRecord::Schema.define(version: 2019_09_23_211554) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "card_racks", force: :cascade do |t|
-    t.string "title"
-    t.integer "board_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["board_id"], name: "index_card_racks_on_board_id"
-  end
+# Could not dump table "card_racks" because of following StandardError
+#   Unknown type '' for column 'board_id'
 
 end
