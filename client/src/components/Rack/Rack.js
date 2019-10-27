@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import AddCardForm from '../Card/AddCardForm'
 import Cards from "../Card/Cards";
 import './Rack.css'
 import addCard from '../../actions/AddCard'
-import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { Draggable } from 'react-beautiful-dnd';
 
 const RackWrapper = styled.div`
     height:100%;

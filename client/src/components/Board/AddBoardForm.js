@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
 import styled from 'styled-components'
 import { reduxForm , Field} from "redux-form"
 import './AddBoardForm.css'

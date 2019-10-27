@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { reduxForm, Field } from "redux-form"
 import addRack from "../../actions/AddRack"
 import AddRackForm from "./AddRackForm";
 import uiAddingRack from "../../actions/UIAddingRack";

@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { reducer as formReducer } from "redux-form";
+import { mergeFetchedBoards } from "../Util";
 
 const boardsReducer = (state = {}, action) => {
     switch (action.type) {
@@ -11,7 +12,7 @@ const boardsReducer = (state = {}, action) => {
         case 'MOVE_RACK_ID':
             return { ...state, [action.payload.boardId]: boardReducer(state[action.payload.boardId], action) }
         case 'RECEIVE_BOARDS':
-            return action.payload.entities.boards;
+            return  mergeFetchedBoards( action.payload.entities.boards, state);
         default:
             return state
     }
@@ -60,7 +61,6 @@ const racksReducer = (state = {}, action) => {
             return { ...state, [action.payload.rackId]: rackReducer(currentRack, action) }
         case 'MOVE_CARD_ID_TO_RACK':
             const { srcRackId, destRackId, srcIndex, destIndex } = action.payload
-            const srcRack = state[srcRackId]
             const cardId = state[srcRackId].cardIds[srcIndex]
             return {
                 ...state,

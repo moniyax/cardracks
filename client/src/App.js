@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom'
 import BoardIndex from './components/Board/BoardIndex'
 import styled from 'styled-components'

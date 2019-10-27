@@ -35,8 +35,6 @@ const Board = ({ title, id }) => {
 class Boards extends Component {
     componentDidMount() {
         this.props.fetchBoards()
-        console.log('componentDidMount');
-        
     }
 
     render() {
