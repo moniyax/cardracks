@@ -1,4 +1,4 @@
-import boardsSchema from "../Schema";
+import {boardsSchema} from "../Schema";
 import { normalize } from "normalizr";
 
 export default (boards) => {

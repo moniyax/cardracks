@@ -5,6 +5,7 @@ import AddRack from '../Rack/AddRack'
 import Rack from '../Rack/Rack'
 import { DragDropContext, Droppable,  } from 'react-beautiful-dnd'
 import moveItem from "../../actions/MoveItem"
+import fetchRacks from "../../actions/FetchRacks"
 
 const BoardC = styled.div`
     display: flex;
@@ -36,10 +37,13 @@ flex-grow: 1;
 position: relative;
 height: 100%;
 overflow-x: auto;
-
-
 `
+
 class Board extends Component {
+    componentDidMount() {
+        this.props.fetchRacks()
+    }
+
     onDragEnd (data) {
         this.props.moveItem(data.type,data.source, data.destination)
     }
@@ -83,4 +87,4 @@ class Board extends Component {
 
 const mapStateToProps = ({ boards, racks }) => ({ boards, racks })
 
-export default connect(mapStateToProps, {moveItem: moveItem})(Board)
+export default connect(mapStateToProps, {moveItem: moveItem, fetchRacks: fetchRacks})(Board)

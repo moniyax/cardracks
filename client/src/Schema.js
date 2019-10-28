@@ -1,6 +1,8 @@
 import {  schema } from 'normalizr';
 
 const board = new schema.Entity('boards')
-const brdsSchm =  [board]
+export const boardsSchema =  [board]
 
-export default brdsSchm
+const rack = new schema.Entity('racks')
+export const racksSchema =  [rack]
+
