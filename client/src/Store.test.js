@@ -102,7 +102,7 @@ test('new racks should have empty card list', () => {
     const state = Store.getState()
     const ids = Object.keys(state.racks);
 
-    expect(state.racks[ids[0]].cardIds.length).toBe(0)
+    expect(state.racks[ids[0]].cards.length).toBe(0)
 })
 
 
@@ -153,7 +153,7 @@ test('adding cards should populate cards dictionary', () => {
     const ids = Object.keys(state.cards)
 
     expect(ids.length).toBe(1)
-    expect(state.cards[ids[0]].content).toBe('some card')
+    expect(state.cards[ids[0]].title).toBe('some card')
 })
 
 test('new cards should be assigned unique uuids', () => {
@@ -171,16 +171,16 @@ test('new cards should be assigned unique uuids', () => {
     const rackId = Store.getState().boards[boardId].rackIds[0]
 
     Store.dispatch(addCard('some card', rackId))
-    expect(Store.getState().racks[rackId].cardIds.length).toBe(1);
+    expect(Store.getState().racks[rackId].cards.length).toBe(1);
 
 
     Store.dispatch(addCard('other card', rackId))
-    const cardIds = Store.getState().racks[rackId].cardIds;
+    const cardIds = Store.getState().racks[rackId].cards;
     expect(cardIds.length).toBe(2);
 
     const state = Store.getState()
 
-    const ids = Store.getState().racks[rackId].cardIds;
+    const ids = Store.getState().racks[rackId].cards;
 
     expect(cardIds[0].length).toBe(36)
     expect(cardIds[1].length).toBe(36)
@@ -195,7 +195,7 @@ test('adding a new card should populate the racks card ids list', () => {
     const state1 = Store.getState()
     const rackIds = Object.keys(state1.racks);
     expect(rackIds.length).toBe(1)
-    expect(state1.racks[rackIds[0]].cardIds).toEqual([])
+    expect(state1.racks[rackIds[0]].cards).toEqual([])
     const rackId = rackIds[0]
 
     Store.dispatch(addCard('some card', rackId))
@@ -205,7 +205,7 @@ test('adding a new card should populate the racks card ids list', () => {
     const cardId = cardsIds[0];
 
     const state2 = Store.getState()
-    expect(state2.racks[Object.keys(state2.racks)[0]].cardIds).toEqual([cardId])
+    expect(state2.racks[Object.keys(state2.racks)[0]].cards).toEqual([cardId])
 })
 
 test('adding a new rack should populate the boards rack ids list', () => {
@@ -317,20 +317,20 @@ test('re-sort card', () => {
     const rackId = Store.getState().boards[boardId].rackIds[0]
 
     const rack = Store.getState().racks[rackId]
-    const cardIds = rack.cardIds
+    const cardIds = rack.cards
     expect(cardIds.length).toBe(0)
 
     Store.dispatch(addCard('card content', rackId))
     Store.dispatch(addCard('another card content', rackId))
-    expect(Store.getState().racks[rackId].cardIds.length).toBe(2)
+    expect(Store.getState().racks[rackId].cards.length).toBe(2)
 
     const src = { droppableId: rackId, index: 1 }
     const dest = { droppableId: rackId, index: 0 }
 
-    const initCardIds = Store.getState().racks[rackId].cardIds
+    const initCardIds = Store.getState().racks[rackId].cards
     Store.dispatch(moveItem('card', src, dest))
 
-    const newCardIds = Store.getState().racks[rackId].cardIds
+    const newCardIds = Store.getState().racks[rackId].cards
 
     expect(newCardIds.length).toBe(2)
     expect(newCardIds).not.toEqual(initCardIds)
@@ -348,20 +348,20 @@ test('moving cards between racks', () => {
     expect(rackIds.length).toBe(2)
     const [rackId1, rackId2] = rackIds
 
-    expect(Store.getState().racks[rackId1].cardIds).toEqual([])
-    expect(Store.getState().racks[rackId2].cardIds).toEqual([])
+    expect(Store.getState().racks[rackId1].cards).toEqual([])
+    expect(Store.getState().racks[rackId2].cards).toEqual([])
 
     Store.dispatch(addCard('card content', rackId1))
     Store.dispatch(addCard('another card content', rackId1))
     Store.dispatch(addCard('yet another card content', rackId2))
 
-    expect(Store.getState().racks[rackId1].cardIds.length).toBe(2)
-    expect(Store.getState().racks[rackId2].cardIds.length).toBe(1)
+    expect(Store.getState().racks[rackId1].cards.length).toBe(2)
+    expect(Store.getState().racks[rackId2].cards.length).toBe(1)
 
     Store.dispatch(moveItem('card',{ droppableId: rackId1, index: 0 },{ droppableId: rackId2, index: 0 }))
 
-    expect(Store.getState().racks[rackId1].cardIds.length).toBe(1)
-    expect(Store.getState().racks[rackId2].cardIds.length).toBe(2)
+    expect(Store.getState().racks[rackId1].cards.length).toBe(1)
+    expect(Store.getState().racks[rackId2].cards.length).toBe(2)
 })
 
 test('receive todos', () => {

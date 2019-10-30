@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import AddRack from '../Rack/AddRack'
 import Rack from '../Rack/Rack'
-import { DragDropContext, Droppable,  } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable, } from 'react-beautiful-dnd'
 import moveItem from "../../actions/MoveItem"
 import fetchRacks from "../../actions/FetchRacks"
 
@@ -41,19 +41,27 @@ overflow-x: auto;
 
 class Board extends Component {
     componentDidMount() {
-        this.props.fetchRacks()
+       const boardId = this.props.match.params.id
+       console.log('boardId',boardId);
+       
+        this.props.fetchRacks(boardId)
     }
 
-    onDragEnd (data) {
-        this.props.moveItem(data.type,data.source, data.destination)
+    onDragEnd(data) {
+        this.props.moveItem(data.type, data.source, data.destination)
     }
 
     render() {
         const { boards, match, racks } = this.props
+        console.log('boards',boards);
+        
         const board = boards[match.params.id]
-        const { title, rackIds } = board
+        console.log('board',board);
 
-        return  <BoardC >
+        const { title, rackIds } = board
+console.log('rackIds', rackIds);
+
+        return <BoardC >
             <BoardHeader>
                 <BoardName>{title}</BoardName>
             </BoardHeader>
@@ -65,15 +73,15 @@ class Board extends Component {
                     {provided => (
                         <Racks {...provided.droppableProps}
                             ref={provided.innerRef}>
-                            {rackIds.map((id,index) => {
+                            {rackIds.map((id, index) => {
                                 const rack = racks[id]
-                                return  <Rack  
+                                return <Rack
                                     key={rack.id}
                                     title={rack.title}
                                     id={rack.id}
-                                    cardIds={rack.cardIds}
+                                    cardIds={rack.cards}
                                     index={index} />
-                            
+
                             })}
                             <AddRack boardId={board.id} />
                             {provided.placeholder}
@@ -85,6 +93,8 @@ class Board extends Component {
     }
 }
 
-const mapStateToProps = ({ boards, racks }) => ({ boards, racks })
+const mapStateToProps = (state) => {
+    return { boards: state.boards, racks: state.racks }
+}
 
-export default connect(mapStateToProps, {moveItem: moveItem, fetchRacks: fetchRacks})(Board)
+export default connect(mapStateToProps, { moveItem: moveItem, fetchRacks: fetchRacks })(Board)

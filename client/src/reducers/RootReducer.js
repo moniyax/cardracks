@@ -12,7 +12,13 @@ const boardsReducer = (state = {}, action) => {
         case 'MOVE_RACK_ID':
             return { ...state, [action.payload.boardId]: boardReducer(state[action.payload.boardId], action) }
         case 'RECEIVE_BOARDS':
-            return  mergeFetchedBoards( action.payload.entities.boards, state);
+            return mergeFetchedBoards(action.payload.entities.boards, state);
+        case 'RECEIVE_RACKS':
+            console.log('racks boardId', action.payload.boardId)
+            const boardId = action.payload.boardId
+            const newBoard1 = boardReducer(state[boardId], action)
+
+            return { ...state, [boardId]: newBoard1 }
         default:
             return state
     }
@@ -31,6 +37,8 @@ const boardReducer = (state = { rackIds: [] }, { type, payload }) => {
             const deleted = [...rackIds.slice(0, fromIndex), ...rackIds.slice(fromIndex + 1)]
             const inserted = [...deleted.slice(0, toIndex), rackId, ...deleted.slice(toIndex)]
             return { ...state, rackIds: inserted }
+        case 'RECEIVE_RACKS':
+            return { ...state, rackIds: payload.rackIds }
         default:
             return state
     }
@@ -61,47 +69,50 @@ const racksReducer = (state = {}, action) => {
             return { ...state, [action.payload.rackId]: rackReducer(currentRack, action) }
         case 'MOVE_CARD_ID_TO_RACK':
             const { srcRackId, destRackId, srcIndex, destIndex } = action.payload
-            const cardId = state[srcRackId].cardIds[srcIndex]
+            const cardId = state[srcRackId].cards[srcIndex]
             return {
                 ...state,
                 [srcRackId]: deleteCardFromRack(srcIndex, state[srcRackId]),
                 [destRackId]: insertCard(cardId, destIndex, state[destRackId])
             }
+        case 'RECEIVE_RACKS':
+            return {...state, ...action.payload.racks}
+        default:
+            return state
+    }
+}
+
+const rackReducer = (state, action) => {
+    switch (action.type) {
+        case 'ADD_RACK':
+            return { ...action.payload, id: action.payload.id, cards: [] }
+        case 'ADD_CARD_ID':
+            return { ...state, cards: [...state.cards, action.payload.cardId] }
+        case 'MOVE_CARD_ID':
+            const { fromIndex, toIndex } = action.payload
+            const cards = state.cards
+            const cardId = cards[fromIndex]
+            const deleted = [...cards.slice(0, fromIndex), ...cards.slice(fromIndex + 1)]
+            const inserted = [...deleted.slice(0, toIndex), cardId, ...deleted.slice(toIndex)]
+            return { ...state, cards: inserted }
         default:
             return state
     }
 }
 
 const deleteCardFromRack = (index, rack) => {
-    const cardIds = rack.cardIds
-    const deleted = [...cardIds.slice(0, index), ...cardIds.slice(index + 1)]
-    return { ...rack, cardIds: deleted }
+    const cards = rack.cards
+    const deleted = [...cards.slice(0, index), ...cards.slice(index + 1)]
+    return { ...rack, cards: deleted }
 }
 
 const insertCard = (cardId, index, rack) => {
-    const cardIds = rack.cardIds
-    const inserted = [...cardIds.slice(0, index), cardId, ...cardIds.slice(index)]
-    return { ...rack, cardIds: inserted }
+    const cards = rack.cards
+    const inserted = [...cards.slice(0, index), cardId, ...cards.slice(index)]
+    return { ...rack, cards: inserted }
 
 }
 
-const rackReducer = (state, action) => {
-    switch (action.type) {
-        case 'ADD_RACK':
-            return { ...action.payload, id: action.payload.id, cardIds: [] }
-        case 'ADD_CARD_ID':
-            return { ...state, cardIds: [...state.cardIds, action.payload.cardId] }
-        case 'MOVE_CARD_ID':
-            const { fromIndex, toIndex } = action.payload
-            const cardIds = state.cardIds
-            const cardId = cardIds[fromIndex]
-            const deleted = [...cardIds.slice(0, fromIndex), ...cardIds.slice(fromIndex + 1)]
-            const inserted = [...deleted.slice(0, toIndex), cardId, ...deleted.slice(toIndex)]
-            return { ...state, cardIds: inserted }
-        default:
-            return state
-    }
-}
 
 const cardsReducer = (state = {}, action) => {
     switch (action.type) {
@@ -111,6 +122,8 @@ const cardsReducer = (state = {}, action) => {
                 ...state,
                 [newCard.id]: newCard
             }
+        case 'RECEIVE_RACKS':
+            return {...state, ...action.payload.cards}
         default:
             return state
     }

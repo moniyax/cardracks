@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom'
 import BoardIndex from './components/Board/BoardIndex'
 import styled from 'styled-components'
-import ShowBoard from "./components/Board/Board";
+import Board from "./components/Board/Board";
 
 const NotFound = () => <div>NotFound</div>
 
@@ -45,7 +45,7 @@ const App = () => <AppC>
   </Header>
   <Switch>
     <Route path='/' exact component={BoardIndex} />
-    <Route path='/boards/:id' component={ShowBoard} />
+    <Route path='/boards/:id' component={Board} />
     <Route component={NotFound} />
   </Switch>
 </AppC>
