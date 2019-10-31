@@ -22,4 +22,15 @@ export const postRack = (rack, boardId) => {
     })
 }
 
+export const postCard = (card, rackId) => {
+    return fetch(`/api/card_racks/${rackId}/cards`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(card)
+    })
+}
+
 export const getRacks = (boardId) => { return fetch(`/api/boards/${boardId}/card_racks`) }

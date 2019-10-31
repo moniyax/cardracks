@@ -9,8 +9,8 @@ export default (title, boardId) => dispatch => {
 
     dispatch({ type: 'ADD_RACK', payload: { title, id } })
     dispatch(addRackId(id, boardId))
-    dispatch(postRack({ title: title }, boardId)
+    dispatch(postRack({id: id, title: title }, boardId)
         .then(response => response.json())
-        .then(board => postRackSuccess())
+        .then(rack => postRackSuccess(rack))
         .catch(error => console.log(error)))
 }

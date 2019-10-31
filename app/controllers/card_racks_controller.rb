@@ -4,8 +4,6 @@ class CardRacksController < ApplicationController
   # GET /card_racks
   def index
     @board = Board.find(params[:board_id])
-    puts " params[:board_id] #{ params[:board_id]}"
-    puts " params[:board_id] #{ @board}"
     card_racks = @board.card_racks.includes(:cards)
     res = card_racks.map do |card_rack|
       card_racks_attributes = card_rack.attributes
@@ -55,6 +53,6 @@ class CardRacksController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def card_rack_params
-      params.permit(:title, :board_id)
+      params.permit(:id, :title, :board_id)
     end
 end

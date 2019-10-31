@@ -42,9 +42,7 @@ overflow-x: auto;
 class Board extends Component {
     componentDidMount() {
        const boardId = this.props.match.params.id
-       console.log('boardId',boardId);
-       
-        this.props.fetchRacks(boardId)
+       this.props.fetchRacks(boardId)
     }
 
     onDragEnd(data) {
@@ -53,13 +51,8 @@ class Board extends Component {
 
     render() {
         const { boards, match, racks } = this.props
-        console.log('boards',boards);
-        
         const board = boards[match.params.id]
-        console.log('board',board);
-
         const { title, rackIds } = board
-console.log('rackIds', rackIds);
 
         return <BoardC >
             <BoardHeader>
