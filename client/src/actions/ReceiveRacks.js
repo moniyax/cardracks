@@ -7,7 +7,6 @@ export default (fetchedRacks, boardId) => {
     const racks = normRacks.entities.racks
     const cards = normRacks.entities.cards
     const rackIds = normRacks.result
-    // const cards = 
 
     return {
         type: 'RECEIVE_RACKS',
