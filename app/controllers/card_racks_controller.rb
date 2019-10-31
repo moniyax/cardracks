@@ -23,6 +23,7 @@ class CardRacksController < ApplicationController
 
   # POST /card_racks
   def create
+    # Board.find(params[:board_id]).card_racks.create(title: params[])
     @card_rack = CardRack.new(card_rack_params)
 
     if @card_rack.save
@@ -54,6 +55,6 @@ class CardRacksController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def card_rack_params
-      params.require(:card_rack).permit(:title, :board_id)
+      params.permit(:title, :board_id)
     end
 end
