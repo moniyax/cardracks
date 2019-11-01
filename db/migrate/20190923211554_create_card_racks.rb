@@ -1,6 +1,6 @@
 class CreateCardRacks < ActiveRecord::Migration[5.2]
   def change
-    create_table :card_racks, id: :uuid do |t|
+    create_table :card_racks do |t|
       t.string :title
       t.uuid :board_id, foreign_key: true
 
