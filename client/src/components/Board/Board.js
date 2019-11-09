@@ -6,6 +6,7 @@ import Rack from '../Rack/Rack'
 import { DragDropContext, Droppable, } from 'react-beautiful-dnd'
 import moveItem from "../../actions/MoveItem"
 import fetchRacks from "../../actions/FetchRacks"
+import apiMoveCardToRack from "../../actions/ApiMoveCardToRack"
 
 const BoardC = styled.div`
     display: flex;
@@ -47,6 +48,7 @@ class Board extends Component {
 
     onDragEnd(data) {
         this.props.moveItem(data.type, data.source, data.destination)
+
     }
 
     render() {
@@ -90,4 +92,4 @@ const mapStateToProps = (state) => {
     return { boards: state.boards, racks: state.racks }
 }
 
-export default connect(mapStateToProps, { moveItem: moveItem, fetchRacks: fetchRacks })(Board)
+export default connect(mapStateToProps, { moveItem: moveItem, fetchRacks: fetchRacks , apiMoveCardToRack})(Board)
