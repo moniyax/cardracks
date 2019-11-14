@@ -33,14 +33,27 @@ export const postCard = (card, rackId) => {
     })
 }
 
-export const updateRack = (card) => {
-    return fetch(`/api/cards/${card.id}`, {
+export const updateCard = (cardId, card_attr) => {
+    return fetch(`/api/cards/${cardId}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
         },
-        body: JSON.stringify(card)
+        body: JSON.stringify(card_attr)
+    })
+}
+
+
+export const updateBoard = (boardId, board_attr) => {
+
+    return fetch(`/api/boards/${boardId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(board_attr)
     })
 }
 

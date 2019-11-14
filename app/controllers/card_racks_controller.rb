@@ -3,15 +3,19 @@ class CardRacksController < ApplicationController
 
   # GET /card_racks
   def index
-    @board = Board.find(params[:board_id])
-    card_racks = @board.card_racks.includes(:cards)
-    res = card_racks.map do |card_rack|
-      card_racks_attributes = card_rack.attributes
-      card_racks_attributes[:cards] = card_rack.cards
-      card_racks_attributes
+    b = Board.find(params[:board_id])
+    
+    card_racks = b.card_racks.includes(:cards).sort{|x,y|
+      b.rack_order.find_index(x.id) <=> b.rack_order.find_index(y.id)
+    }
+
+    card_attrs = card_racks.map do |card_rack|
+      ca = card_rack.attributes
+      ca[:cards] = card_rack.cards
+      ca
     end
 
-    render json: res
+    render json: card_attrs
   end
 
   # GET /card_racks/1

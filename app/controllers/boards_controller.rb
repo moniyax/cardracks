@@ -10,12 +10,14 @@ class BoardsController < ApplicationController
 
   # GET /boards/1
   def show
+
     render json: @board
   end
 
   # POST /boards
   def create
     @board = Board.new(board_params)
+    @board.rack_order = []
 
     if @board.save
       render json: @board, status: :created, location: @board
@@ -46,6 +48,6 @@ class BoardsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def board_params
-      params.permit(:id, :title)
+      params.require(:board).permit(:id, :title, rack_order: [])
     end
 end

@@ -1,6 +1,5 @@
-import { updateRack } from "../Api";
+import { updateCard } from "../Api";
 
-export default (card, rackId) => {
-    const newCard = {...card, card_rack_id: rackId}
-    updateRack(newCard)
+export default (cardId, rackId) => {
+    updateCard(cardId, {card_rack_id: rackId})
 }
