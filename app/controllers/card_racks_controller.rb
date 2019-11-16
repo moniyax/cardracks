@@ -3,15 +3,19 @@ class CardRacksController < ApplicationController
 
   # GET /card_racks
   def index
-    b = Board.find(params[:board_id])
-    
-    card_racks = b.card_racks.includes(:cards).sort{|x,y|
-      b.rack_order.find_index(x.id) <=> b.rack_order.find_index(y.id)
+    board = Board.find(params[:board_id])
+
+    card_racks = board.card_racks.includes(:cards).sort{|x,y|
+      board.rack_order.find_index(x.id) <=> board.rack_order.find_index(y.id)
     }
 
     card_attrs = card_racks.map do |card_rack|
       ca = card_rack.attributes
-      ca[:cards] = card_rack.cards
+
+      ca[:cards] = card_rack.cards.sort{ |x,y|
+        card_rack.card_order.find_index(x.id) <=> card_rack.card_order.find_index(y.id)
+      }
+
       ca
     end
 
@@ -28,8 +32,16 @@ class CardRacksController < ApplicationController
     # Board.find(params[:board_id]).card_racks.create(title: params[])
     @card_rack = CardRack.new(card_rack_params)
 
+    @card_rack.card_order = []
     if @card_rack.save
-      render json: @card_rack, status: :created, location: @card_rack
+      @card_rack.board.rack_order = params[:rack_order]
+      if @card_rack.board.save
+        render json: @card_rack, status: :created, location: @card_rack
+
+        puts "----new rack ordet #{params[:rack_order]}"
+      else
+        render json: @card_rack.errors, status: :unprocessable_entity
+      end
     else
       render json: @card_rack.errors, status: :unprocessable_entity
     end
@@ -57,6 +69,6 @@ class CardRacksController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def card_rack_params
-      params.permit(:id, :title, :board_id)
+      params.permit(:id, :title, :board_id, card_order: [])
     end
 end

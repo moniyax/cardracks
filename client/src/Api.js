@@ -34,8 +34,23 @@ export const postCard = (card, rackId) => {
 }
 
 export const updateCard = (cardId, card_attr) => {
+    console.log('card_attr', card_attr)
+    
     return fetch(`/api/cards/${cardId}`, {
         method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(card_attr)
+    })
+}
+
+export const reorderCard = (cardId, card_attr) => {
+    console.log('card_attr', card_attr)
+    
+    return fetch(`/api/cards/${cardId}/reorder`, {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',

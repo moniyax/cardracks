@@ -8,7 +8,11 @@ Rails.application.routes.draw do
     end
 
     resources :card_racks, shallow: true do
-      resources :cards
+      resources :cards do
+        member do
+          post 'reorder'
+        end
+      end
     end
   end
 

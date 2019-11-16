@@ -1,5 +1,5 @@
 class CardsController < ApplicationController
-  before_action :set_card, only: [:show, :update, :destroy]
+  before_action :set_card, only: [:show, :update, :destroy, :reorder]
 
   # GET /cards/1
   def show
@@ -11,7 +11,11 @@ class CardsController < ApplicationController
     @card = Card.new(card_params)
 
     if @card.save
-      render json: @card, status: :created, location: @card
+      if @card.card_rack.update(card_order: params[:card_order])
+        render json: @card, status: :created, location: @card
+      else
+        render json: @card.errors, status: :unprocessable_entity
+      end
     else
       render json: @card.errors, status: :unprocessable_entity
     end
@@ -20,7 +24,12 @@ class CardsController < ApplicationController
   # PATCH/PUT /cards/1
   def update
     if @card.update(card_params)
-      render json: @card
+      if @card.card_rack.update(card_order: params[:card_order])
+        render json: @card
+      else
+        puts "--- card order NOT updated"
+
+      end
     else
       render json: @card.errors, status: :unprocessable_entity
     end
@@ -29,6 +38,15 @@ class CardsController < ApplicationController
   # DELETE /cards/1
   def destroy
     @card.destroy
+  end
+
+  def reorder
+    if @card.card_rack.update(card_order: params[:card_order])
+      puts "--- card order updates"
+    else
+      puts "--- card order NOT updates"
+
+    end
   end
 
   private
