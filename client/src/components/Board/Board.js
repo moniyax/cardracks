@@ -7,6 +7,7 @@ import { DragDropContext, Droppable, } from 'react-beautiful-dnd'
 import moveItem from "../../actions/MoveItem"
 import fetchRacks from "../../actions/FetchRacks"
 import apiMoveCardToRack from "../../actions/ApiMoveCardToRack"
+import Authentication from '../Authentication'
 
 const BoardC = styled.div`
     display: flex;
@@ -42,8 +43,8 @@ overflow-x: auto;
 
 class Board extends Component {
     componentDidMount() {
-       const boardId = this.props.match.params.id
-       this.props.fetchRacks(boardId)
+        const boardId = this.props.match.params.id
+        this.props.fetchRacks(boardId)
     }
 
     onDragEnd(data) {
@@ -55,36 +56,39 @@ class Board extends Component {
         const { boards, match, racks } = this.props
         const board = boards[match.params.id]
         const { title, rackIds } = board
+       
+        return <Authentication>
+            <BoardC >
+                <BoardHeader>
+                    <BoardName>{title}</BoardName>
+                </BoardHeader>
+                <DragDropContext onDragEnd={this.onDragEnd.bind(this)}>
+                    <Droppable
+                        droppableId={board.id}
+                        direction="horizontal"
+                        type="rack">
+                        {provided => (
+                            <Racks {...provided.droppableProps}
+                                ref={provided.innerRef}>
+                                {rackIds.map((id, index) => {
+                                    const rack = racks[id]
+                                    return <Rack
+                                        key={rack.id}
+                                        title={rack.title}
+                                        id={rack.id}
+                                        cardIds={rack.cards}
+                                        index={index} />
 
-        return <BoardC >
-            <BoardHeader>
-                <BoardName>{title}</BoardName>
-            </BoardHeader>
-            <DragDropContext onDragEnd={this.onDragEnd.bind(this)}>
-                <Droppable
-                    droppableId={board.id}
-                    direction="horizontal"
-                    type="rack">
-                    {provided => (
-                        <Racks {...provided.droppableProps}
-                            ref={provided.innerRef}>
-                            {rackIds.map((id, index) => {
-                                const rack = racks[id]
-                                return <Rack
-                                    key={rack.id}
-                                    title={rack.title}
-                                    id={rack.id}
-                                    cardIds={rack.cards}
-                                    index={index} />
+                                })}
+                                <AddRack boardId={board.id} />
+                                {provided.placeholder}
 
-                            })}
-                            <AddRack boardId={board.id} />
-                            {provided.placeholder}
+                            </Racks>)}
+                    </Droppable>
+                </DragDropContext>
+            </BoardC>
+        </Authentication>
 
-                        </Racks>)}
-                </Droppable>
-            </DragDropContext>
-        </BoardC>
     }
 }
 
@@ -92,4 +96,4 @@ const mapStateToProps = (state) => {
     return { boards: state.boards, racks: state.racks }
 }
 
-export default connect(mapStateToProps, { moveItem: moveItem, fetchRacks: fetchRacks , apiMoveCardToRack})(Board)
+export default connect(mapStateToProps, { moveItem: moveItem, fetchRacks: fetchRacks, apiMoveCardToRack })(Board)

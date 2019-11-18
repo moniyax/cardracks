@@ -1,8 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom'
-import BoardIndex from './components/Board/BoardIndex'
 import styled from 'styled-components'
-import Board from "./components/Board/Board";
+import Base from './components/Base';
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
+import BoardAuth from './components/Board/BoardAuth';
 
 const NotFound = () => <div>NotFound</div>
 
@@ -44,8 +46,10 @@ const App = () => <AppC>
 
   </Header>
   <Switch>
-    <Route path='/' exact component={BoardIndex} />
-    <Route path='/boards/:id' component={Board} />
+    <Route path='/' exact component={Base} />
+    <Route path='/boards/:id' component={BoardAuth} />
+    <Route path="/signin" component={SignIn} />
+    <Route path="/signup" component={SignUp} />
     <Route component={NotFound} />
   </Switch>
 </AppC>
