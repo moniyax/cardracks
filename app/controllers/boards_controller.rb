@@ -3,20 +3,19 @@ class BoardsController < ApplicationController
 
   # GET /boards
   def index
-    @boards = Board.all
+    @boards = @current_user.created_boards
 
     render json: @boards
   end
 
   # GET /boards/1
   def show
-
     render json: @board
   end
 
   # POST /boards
   def create
-    @board = Board.new(board_params)
+    @board = @current_user.created_boards.build(board_params)
     @board.rack_order = []
 
     if @board.save
@@ -43,7 +42,7 @@ class BoardsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_board
-      @board = Board.find(params[:id])
+      @board = @current_user.created_boards.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
