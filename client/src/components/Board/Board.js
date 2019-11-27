@@ -56,7 +56,6 @@ class Board extends Component {
         const { boards, match, racks } = this.props
         const board = boards[match.params.id]
         const { title, rackIds } = board
-       
         return <Authentication>
             <BoardC >
                 <BoardHeader>

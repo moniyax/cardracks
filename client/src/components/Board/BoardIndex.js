@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import AddBoard from "./AddBoard"
 import fetchBoards from "../../actions/FetchBoards"
+import webSocketBoardCreated from "../../actions/WebSocketBoardCreated"
+import { ActionCable } from 'react-actioncable-provider';
 
 const BoardsContainer = styled.div`
     display: flex;
@@ -32,14 +34,27 @@ const Board = ({ title, id }) => {
 }
 
 
+
 class Boards extends Component {
     componentDidMount() {
         this.props.fetchBoards()
     }
 
+    handleReceived = (arg) => {
+        const board = JSON.parse(arg);
+        this.props.webSocketBoardCreated(board)
+    };
+
     render() {
         const { boards } = this.props;
         return <BoardsContainer>
+            <ActionCable
+                channel={{
+                    channel: "BoardsChannel",
+                    user_id: JSON.parse(localStorage.getItem('user')).id
+                }}
+                onReceived={this.handleReceived}
+            />
             <AddBoard />
 
             {Object.keys(boards).map(id => {
@@ -50,4 +65,4 @@ class Boards extends Component {
     }
 }
 
-export default connect(({ boards }) => ({ boards }), {fetchBoards:fetchBoards})(Boards)
+export default connect(({ boards }) => ({ boards }), { fetchBoards, webSocketBoardCreated })(Boards)

@@ -19,7 +19,11 @@ class BoardsController < ApplicationController
     @board.rack_order = []
 
     if @board.save
-      render json: @board, status: :created, location: @board
+      ActionCable.server.broadcast(
+        "boards_channel_for_user_#{@current_user.id}",
+        @board.to_json)
+      render json: {}
+
     else
       render json: @board.errors, status: :unprocessable_entity
     end

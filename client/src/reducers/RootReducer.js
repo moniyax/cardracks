@@ -5,6 +5,7 @@ import { mergeFetchedBoards } from "../Util";
 const boardsReducer = (state = {}, action) => {
     switch (action.type) {
         case 'ADD_BOARD':
+        case 'WEBSOCKET_ADD_BOARD':
             const newBoard = boardReducer(undefined, action)
             return { ...state, [newBoard.id]: newBoard }
         case 'ADD_RACK_ID':
@@ -27,6 +28,7 @@ const boardsReducer = (state = {}, action) => {
 const boardReducer = (state = { rackIds: [] }, { type, payload }) => {
     switch (type) {
         case 'ADD_BOARD':
+        case 'WEBSOCKET_ADD_BOARD':
             return { ...payload, rackIds: [], id: payload.id }
         case 'ADD_RACK_ID':
             return { ...state, rackIds: [...state.rackIds, payload.rackId] }
@@ -48,6 +50,8 @@ const boardIdsReducer = (state = [], action) => {
     switch (action.type) {
         case 'ADD_BOARD_ID':
             return [...state, action.payload.id]
+        case 'WEBSOCKET_ADD_BOARD_ID':
+           return state.indexOf(action.payload.id) > 0 ? state : [...state, action.payload.id]
         case 'RECEIVE_BOARDS':
             return action.payload.result;
         default:
@@ -76,7 +80,7 @@ const racksReducer = (state = {}, action) => {
                 [destRackId]: insertCard(cardId, destIndex, state[destRackId])
             }
         case 'RECEIVE_RACKS':
-            return {...state, ...action.payload.racks}
+            return { ...state, ...action.payload.racks }
         default:
             return state
     }
@@ -123,7 +127,7 @@ const cardsReducer = (state = {}, action) => {
                 [newCard.id]: newCard
             }
         case 'RECEIVE_RACKS':
-            return {...state, ...action.payload.cards}
+            return { ...state, ...action.payload.cards }
         default:
             return state
     }
