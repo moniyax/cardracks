@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
 
     before_action :get_current_user
     attr_accessor :current_user
-  
+    skip_before_action :get_current_user, only: [:fallback_index_html]
+
     def get_current_user
       if u = token_auth
         @current_user = u
@@ -19,7 +20,7 @@ class ApplicationController < ActionController::Base
     end
 
 
-    def fallback_index_html
+    def  
         render :file => 'public/index.html'
     end
   end
