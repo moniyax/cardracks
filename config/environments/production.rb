@@ -84,5 +84,5 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.middleware.use AppActionCable
-  config.web_socket_server_url = "wss://fast-dawn-79346.herokuapp.com/
+  config.web_socket_server_url = "wss://fast-dawn-79346.herokuapp.com/"
 end
