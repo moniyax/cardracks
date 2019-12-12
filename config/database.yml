@@ -80,6 +80,8 @@ test:
 #
 production:
   <<: *default
-  database: cardsinracks_production
-  username: cardsinracks
-  password: <%= ENV['CARDSINRACK_DATABASE_PASSWORD'] %>
+  host: localhost 
+  port: 5432
+  database: cardracks_production
+  username: cardracks
+  password: <%= ENV['CARDRACKS_DB_PASSWORD'] %>
