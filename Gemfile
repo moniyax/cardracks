@@ -26,8 +26,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # gem 'rack-cors'
 
 group :development, :test do
-  # Use sqlite3 as the database for Active Record
-  gem 'sqlite3'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
@@ -46,9 +44,10 @@ group :development do
 
 end
 
+gem 'pg'
+
 group :production do
   # Use postgres as the database for production
-  gem 'pg'
   # Use Redis adapter to run Action Cable in production
   gem 'redis', '~> 4.0'
 end
@@ -59,3 +58,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # ActiveAdmin
 gem 'devise'
 gem 'activeadmin'
+gem 'therubyracer'
