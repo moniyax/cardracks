@@ -5,10 +5,7 @@ test:
   adapter: async
 
 
-production: &production  
-  :url: redis://h:p5f0065287fc9d6123427db08abee61c68486ebd5f95422647196c098fd77c213@ec2-34-236-183-222.compute-1.amazonaws.com:24029
-  :host: p5f0065287fc9d6123427db08abee61c68486ebd5f95422647196c098fd77c213@ec2-34-236-183-222.compute-1.amazonaws.com
-  :port: 24029
-  :password: p5f0065287fc9d6123427db08abee61c68486ebd5f95422647196c098fd77c213
-  :inline: true
-  :timeout: 1
+production:
+  adapter: redis
+  url: redis://localhost:6379
+  
