@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from "react-router-dom";
 import styled from 'styled-components'
 import AddBoard from "./AddBoard"
 import fetchBoards from "../../actions/FetchBoards"
 import webSocketBoardCreated from "../../actions/WebSocketBoardCreated"
 import { ActionCable } from 'react-actioncable-provider';
+import "./BoardIndex.css";
 
 const BoardsContainer = styled.div`
     display: flex;
@@ -14,23 +16,13 @@ const BoardsContainer = styled.div`
     align-content: start;
 `
 
-const BoardContainer = styled.a`
-    display: flex;
-    border: 1px solid #ddd;
-    min-width: 200px;
-    height: 80px;
-    margin: 20px;
-    padding: 20px;
-    border-radius: 10px;
-`
-
 
 const Board = ({ title, id }) => {
-    const path = "boards/" + id
+    const path = "/boards/" + id
 
-    return <BoardContainer href={path}>
+    return <Link className="tile" to={path}>
         <div>{title}</div>
-    </BoardContainer>
+    </Link>
 }
 
 
