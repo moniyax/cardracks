@@ -1,5 +1,6 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom'
+import './App.css';
+import { Route, Switch, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Base from './components/Base';
 import SignIn from './components/SignIn';
@@ -41,7 +42,7 @@ const Right = styled.div`
 const App = () => <AppC>
   <Header>
     <Left></Left>
-    <Title>CardsInRacks</Title>
+    <Title> <Link to='/' className="title">CardsInRacks</Link></Title>
     <Right></Right>
 
   </Header>
