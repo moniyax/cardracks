@@ -22,8 +22,8 @@ const AddBoardEditWrapper = styled.div`
     height: 80px;
     margin: 20px;
     padding: 20px;
-    border-radius: 3px;
-    background: lightGreen;
+    border-radius: 13px;
+    background: #9a9a9a;
     color: #eee;
     display: flex;
     flex-wrap: wrap;
