@@ -15,7 +15,6 @@ const boardsReducer = (state = {}, action) => {
         case 'RECEIVE_BOARDS':
             return mergeFetchedBoards(action.payload.entities.boards, state);
         case 'RECEIVE_RACKS':
-            console.log('racks boardId', action.payload.boardId)
             const boardId = action.payload.boardId
             const newBoard1 = boardReducer(state[boardId], action)
 
@@ -175,5 +174,30 @@ export default combineReducers({
     racks: racksReducer,
     cards: cardsReducer,
     ui: uiReducer,
-    form: formReducer
-})
+    form: formReducer.plugin({
+        addBoard: (state, action) => { // addBoard -> form name given to reduxForm()
+          switch(action.type) {
+            case 'POST_BOARD_SUCCESS':
+              return undefined;       // <--- blow away form data
+            default:
+              return state;
+          }
+        },
+        addCard: (state, action) => { // addBoard -> form name given to reduxForm()
+          switch(action.type) {
+            case 'POST_CARD_SUCCESS':
+              return undefined;       // <--- blow away form data
+            default:
+              return state;
+          }
+        },
+        addRack: (state, action) => { // addBoard -> form name given to reduxForm()
+          switch(action.type) {
+            case 'POST_RACK_SUCCESS':
+              return undefined;       // <--- blow away form data
+            default:
+              return state;
+          }
+        }
+      })
+    })

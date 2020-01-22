@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { reduxForm , Field} from "redux-form"
+import { reduxForm, Field } from "redux-form"
 import './AddBoardForm.css'
 
 const AddBoardButtons = styled.div`
@@ -25,18 +25,18 @@ const AddBoardForm = props => {
     const { handleSubmit } = props
     return (
         <form onSubmit={handleSubmit}>
-            <Field className="boardNameInput" name="boardName" component="input" type="text" placeholder="board name goes here"/>
+            <Field className="boardNameInput" name="boardName" component="input" type="text" placeholder="New board name" />
 
             <AddBoardButtons >
                 <AddBoardCancelButton >
                     Cancel
-            </AddBoardCancelButton>
-            <AddBoardCreateButton >
+                </AddBoardCancelButton>
+                <AddBoardCreateButton >
                     Create
-            </AddBoardCreateButton>
+                </AddBoardCreateButton>
             </AddBoardButtons>
-        </form>
-    )
+        </form>)
 }
+
 
 export default reduxForm({ form: 'addBoard' })(AddBoardForm)

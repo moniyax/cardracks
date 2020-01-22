@@ -1,7 +1,7 @@
 import uuid from 'uuid/v4'
 import addCardId from './AddCardId'
 import { postCard } from "../Api";
-import postCardSuccess from "./PostRackSuccess";
+import postCardSuccess from "./postCardSuccess";
 import Store from "./../Store"
 
 export default (title, rackId) => dispatch => {
