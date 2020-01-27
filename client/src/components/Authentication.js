@@ -4,7 +4,6 @@ import {Redirect} from 'react-router-dom';
 export default class Authentication extends Component {
   render() {
     let user = JSON.parse(localStorage.getItem('user'));
-    console.log('user', user);
     
     if (user && user.token) {
       return <React.Fragment>{this.props.children}</React.Fragment>

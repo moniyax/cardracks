@@ -19,19 +19,13 @@ export default class SignIn extends Component {
         'password': this.refs.password.value,
       })
     }).then((res) => {
-      console.log('======');
-      console.log('res.ok', res.ok);
       let res_json = res.json();
-      console.log('res.json()', res_json);
       if (!res.ok) throw Error(res);
       return res_json;
     }).then((r) => {
-      console.log('r', r);
-
       localStorage.setItem('user', JSON.stringify(r));
       this.setState({loggedIn: 'true'})
     }).catch((err) => {
-      console.log('logIn: failed', err['body']);
       this.setState({loggedIn: 'failed'})
     });
   }
