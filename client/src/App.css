@@ -2,3 +2,43 @@
    color: #fff;
    text-decoration: none;
 }
+
+.header {
+   height: 53px;
+flex: 0 0 auto;
+
+display: flex;
+background: #00aecc;
+padding: 4px ;
+justify-content: space-between;
+align-items: center;
+color:#fff;
+padding: 0 140px;
+list-style: none;
+padding: 0 140px;
+margin: 0;
+}
+
+.title {
+font-weight: bold;
+font-size: 20px;
+}
+
+.nav {
+   position: absolute;
+   background-color: #eee;
+   list-style: none;
+   padding: 5px;
+   width: 80px;
+   top: 53px;
+   visibility: hidden;
+   color: #000;
+}
+
+.right:hover ul , .nav:hover{
+   visibility: visible;
+}
+
+.right {
+   height: 100%;
+}
