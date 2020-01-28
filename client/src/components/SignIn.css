@@ -1,0 +1,19 @@
+.auth-box {
+    margin-top: 101px;text-align: center;
+}
+
+.auth-form {
+    margin: auto;width: 20%;text-align: left
+}
+
+input[type=text], input[type=password] {
+    width: 100%
+}
+
+input[type=submit] {
+    margin: 20px auto;display: block;width: 80%;
+}
+
+.field {
+    margin-top: 16px
+}
