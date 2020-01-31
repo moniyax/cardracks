@@ -3,7 +3,6 @@ import { normalize } from "normalizr";
 
 export default (fetchedRacks, boardId) => {
     const normRacks = normalize(fetchedRacks, racksSchema)
-    console.log('normRacks', normRacks)
     const racks = normRacks.entities.racks
     const cards = normRacks.entities.cards
     const rackIds = normRacks.result

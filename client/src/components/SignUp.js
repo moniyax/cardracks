@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 
 import { connect } from "react-redux";
 import signUp from "../actions/SignUp";
@@ -13,7 +13,7 @@ class SignUp extends Component {
         <SignUpForm onSubmit={({ name, email, password }) => {
           this.props.signUp(name, email, password)
         }} />
-        <a href="/signin">Log In</a>
+        <Link to='/signin' >Log In</Link>
       </div>
     )
   }
