@@ -1,58 +1,37 @@
-import React, {Component} from 'react';
-import {Link, Redirect} from 'react-router-dom'
+import React, { Component } from 'react';
+import { connect } from "react-redux";
+import { Redirect } from 'react-router-dom'
+import signIn from "../actions/SignIn";
+import SignInForm from "./SignInForm";
 import "./SignIn.css";
-export default class SignIn extends Component {
-  state = {
-    loggedIn: 'false'
-  };
 
-  handleSubmit(e) {
-    e.preventDefault();
-    fetch('api/session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        'email': this.refs.email.value,
-        'password': this.refs.password.value,
-      })
-    }).then((res) => {
-      let res_json = res.json();
-      if (!res.ok) throw Error(res);
-      return res_json;
-    }).then((r) => {
-      localStorage.setItem('user', JSON.stringify(r));
-      this.setState({loggedIn: 'true'})
-    }).catch((err) => {
-      this.setState({loggedIn: 'failed'})
-    });
-  }
-
+class SignIn extends Component {
   content() {
-    return <div class="auth-box">
-    <h2>Log In</h2>
-    <form className="auth-form" onSubmit={this.handleSubmit.bind(this)}>
-      <div className="field">
-        <div>Email:</div>
-        <input type="text" ref="email"></input>
+    return (
+      <div className="auth-box">
+        <h2>Log In</h2>
+        <SignInForm onSubmit={({ email, password }) => {
+          this.props.signIn(email, password)
+        }} />
+        <a href="/signup">Sign Up</a>
       </div>
-      <div className="field">
-          <div>Password:</div>
-          <input type="password"  ref="password"></input>
-      </div>
-      <input type="submit" value="Log in"></input>
-    </form>
-    <a href="/signup">Sign Up</a>
-  </div>
+    )
   }
 
   render() {
-    if (this.state.loggedIn === 'true') {
+    if (this.props.loggedIn === true) {
       return <Redirect to='/'></Redirect>
     } else {
       return this.content()
     }
   }
 }
+
+const s2props = (state) => {
+  return { loggedIn: state.auth.loggedIn }
+}
+
+export default connect(
+  s2props,
+  { signIn }
+)(SignIn)

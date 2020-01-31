@@ -50,7 +50,7 @@ const boardIdsReducer = (state = [], action) => {
         case 'ADD_BOARD_ID':
             return [...state, action.payload.id]
         case 'WEBSOCKET_ADD_BOARD_ID':
-           return state.indexOf(action.payload.id) > 0 ? state : [...state, action.payload.id]
+            return state.indexOf(action.payload.id) > 0 ? state : [...state, action.payload.id]
         case 'RECEIVE_BOARDS':
             return action.payload.result;
         default:
@@ -163,6 +163,20 @@ const uiAddingRackReducer = (state = false, action) => {
     }
 }
 
+const authReducer = (state = {}, action) => {
+    switch (action.type) {
+        case 'SIGN_IN_SUCCESS':
+        case 'SIGN_UP_SUCCESS':
+            return { loggedIn: true, user: action.payload };
+        case 'SIGN_OUT':
+            return { loggedIn: false };
+        case 'SIGN_IN_FAILURE':
+            return { logInFailure: action.payload }
+        default:
+            return state;
+    }
+}
+
 const uiReducer = combineReducers({
     isAddingBoard: uiAddingBoardReducer,
     isAddingRack: uiAddingRackReducer
@@ -174,30 +188,31 @@ export default combineReducers({
     racks: racksReducer,
     cards: cardsReducer,
     ui: uiReducer,
+    auth: authReducer,
     form: formReducer.plugin({
         addBoard: (state, action) => { // addBoard -> form name given to reduxForm()
-          switch(action.type) {
-            case 'POST_BOARD_SUCCESS':
-              return undefined;       // <--- blow away form data
-            default:
-              return state;
-          }
+            switch (action.type) {
+                case 'POST_BOARD_SUCCESS':
+                    return undefined;       // <--- blow away form data
+                default:
+                    return state;
+            }
         },
         addCard: (state, action) => { // addBoard -> form name given to reduxForm()
-          switch(action.type) {
-            case 'POST_CARD_SUCCESS':
-              return undefined;       // <--- blow away form data
-            default:
-              return state;
-          }
+            switch (action.type) {
+                case 'POST_CARD_SUCCESS':
+                    return undefined;       // <--- blow away form data
+                default:
+                    return state;
+            }
         },
         addRack: (state, action) => { // addBoard -> form name given to reduxForm()
-          switch(action.type) {
-            case 'POST_RACK_SUCCESS':
-              return undefined;       // <--- blow away form data
-            default:
-              return state;
-          }
+            switch (action.type) {
+                case 'POST_RACK_SUCCESS':
+                    return undefined;       // <--- blow away form data
+                default:
+                    return state;
+            }
         }
-      })
     })
+})

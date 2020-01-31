@@ -38,12 +38,12 @@ class Boards extends Component {
     };
 
     render() {
-        const { boards } = this.props;
+        const { boards, auth } = this.props;
         return <BoardsContainer>
             <ActionCable
                 channel={{
                     channel: "BoardsChannel",
-                    user_id: JSON.parse(localStorage.getItem('user')).id
+                    user_id: auth.user.id
                 }}
                 onReceived={this.handleReceived}
             />
@@ -57,4 +57,6 @@ class Boards extends Component {
     }
 }
 
-export default connect(({ boards }) => ({ boards }), { fetchBoards, webSocketBoardCreated })(Boards)
+export default connect(
+    ({ boards, auth }) => ({ boards, auth }), 
+    { fetchBoards, webSocketBoardCreated })(Boards)

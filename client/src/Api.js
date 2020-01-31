@@ -1,12 +1,12 @@
+import Store from "./Store";
+
 const headers = () => ({
     'Content-Type': 'application/json',
     Accept: 'application/json',
-    Authorization: 'Token token="' + JSON.parse(localStorage.getItem('user')).token + '"'
+    Authorization: 'Token token="' + Store.getState().auth.user.token + '"'
 })
 
 export const getBoards = () => {
-    console.log('what');
-    
     return fetch('/api/boards', {
         headers: headers()
     })
@@ -37,8 +37,6 @@ export const postCard = (card, rackId) => {
 }
 
 export const updateCard = (cardId, card_attr) => {
-    console.log('card_attr', card_attr)
-
     return fetch(`/api/cards/${cardId}`, {
         method: 'PATCH',
         headers: headers(),
@@ -47,8 +45,6 @@ export const updateCard = (cardId, card_attr) => {
 }
 
 export const reorderCard = (cardId, card_attr) => {
-    console.log('card_attr', card_attr)
-
     return fetch(`/api/cards/${cardId}/reorder`, {
         method: 'POST',
         headers: headers(),
@@ -65,6 +61,38 @@ export const updateBoard = (boardId, board_attr) => {
     })
 }
 
-export const getRacks = (boardId) => { return fetch(`/api/boards/${boardId}/card_racks`, {
-    headers: headers(),
-}) }
+export const getRacks = (boardId) => {
+    return fetch(`/api/boards/${boardId}/card_racks`, {
+        headers: headers(),
+    })
+}
+
+
+export const signIn = (email, password) => {
+    return fetch('api/session', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify({
+            'email': email,
+            'password': password,
+        })
+    })
+}
+
+export const signUp = (name, email, password) => {
+    return fetch('api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          'name': name,
+          'email': email,
+          'password': password,
+        })
+      })
+}

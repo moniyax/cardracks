@@ -38,6 +38,7 @@ Store.subscribe(throttle(() => {
     cards: Store.getState().cards,
     racks: Store.getState().racks,
     ui: Store.getState().ui,
+    auth: Store.getState().auth,
   }
   saveState(appState)
 }, 1000));
