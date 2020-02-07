@@ -5,6 +5,8 @@ import Cards from "../Card/Cards";
 import './Rack.css'
 import addCard from '../../actions/AddCard'
 import { Draggable } from 'react-beautiful-dnd';
+import webSocketCardCreated from "../../actions/WebSocketCardCreated"
+import { ActionCable } from 'react-actioncable-provider';
 
 const RackWrapper = styled.div`
     height:100%;
@@ -37,10 +39,23 @@ class Rack extends Component {
         addCard(cardTitle, rackId)
     }
 
+    handleReceived = (arg) => {
+
+        const card = JSON.parse(arg);
+        this.props.webSocketCardCreated(card, card.card_rack_id)
+    };
+
     render() { 
-        const { title, id, cardIds, cards, index } = this.props
+        const { title, id, cardIds, cards, index,auth } = this.props
 
         return <RackWrapper>
+            <ActionCable
+                    channel={{
+                        channel: "CardsChannel",
+                        user_id: auth.user.id
+                    }}
+                    onReceived={this.handleReceived}
+                />
             <Draggable
                 draggableId={id}
                 index={index}>
@@ -57,4 +72,4 @@ class Rack extends Component {
 }
 
 
-export default connect((({ cards }) => ({ cards })), { addCard })(Rack)
+export default connect((({ cards, auth }) => ({ cards, auth })), { addCard, webSocketCardCreated })(Rack)

@@ -9,6 +9,7 @@ const boardsReducer = (state = {}, action) => {
             const newBoard = boardReducer(undefined, action)
             return { ...state, [newBoard.id]: newBoard }
         case 'ADD_RACK_ID':
+        case 'WEBSOCKET_ADD_RACK_ID':
             return { ...state, [action.payload.boardId]: boardReducer(state[action.payload.boardId], action) }
         case 'MOVE_RACK_ID':
             return { ...state, [action.payload.boardId]: boardReducer(state[action.payload.boardId], action) }
@@ -30,7 +31,9 @@ const boardReducer = (state = { rackIds: [] }, { type, payload }) => {
         case 'WEBSOCKET_ADD_BOARD':
             return { ...payload, rackIds: [], id: payload.id }
         case 'ADD_RACK_ID':
-            return { ...state, rackIds: [...state.rackIds, payload.rackId] }
+        case 'WEBSOCKET_ADD_RACK_ID':
+
+            return { ...state, rackIds: [...state.rackIds.filter(id => id !== payload.rackId), payload.rackId] }
         case 'MOVE_RACK_ID':
             const { fromIndex, toIndex } = payload
             const rackIds = state.rackIds
@@ -61,6 +64,7 @@ const boardIdsReducer = (state = [], action) => {
 const racksReducer = (state = {}, action) => {
     switch (action.type) {
         case 'ADD_RACK':
+        case 'WEBSOCKET_ADD_RACK':
             const newRack = rackReducer(undefined, action)
             return {
                 ...state,
@@ -68,6 +72,7 @@ const racksReducer = (state = {}, action) => {
             }
         case 'ADD_CARD_ID':
         case 'MOVE_CARD_ID':
+        case 'WEBSOCKET_ADD_CARD_ID':
             const currentRack = state[action.payload.rackId]
             return { ...state, [action.payload.rackId]: rackReducer(currentRack, action) }
         case 'MOVE_CARD_ID_TO_RACK':
@@ -88,9 +93,14 @@ const racksReducer = (state = {}, action) => {
 const rackReducer = (state, action) => {
     switch (action.type) {
         case 'ADD_RACK':
+
             return { ...action.payload, id: action.payload.id, cards: [] }
+        case 'WEBSOCKET_ADD_RACK':
+            return { ...action.payload, id: action.payload.rackId, cards: [] }
+
         case 'ADD_CARD_ID':
-            return { ...state, cards: [...state.cards, action.payload.cardId] }
+        case 'WEBSOCKET_ADD_CARD_ID':
+            return { ...state, cards: [...state.cards.filter(id => id !== action.payload.cardId), action.payload.cardId] }
         case 'MOVE_CARD_ID':
             const { fromIndex, toIndex } = action.payload
             const cards = state.cards
@@ -120,6 +130,7 @@ const insertCard = (cardId, index, rack) => {
 const cardsReducer = (state = {}, action) => {
     switch (action.type) {
         case 'ADD_CARD':
+        case 'WEBSOCKET_ADD_CARD':
             const newCard = cardReducer(undefined, action)
             return {
                 ...state,
@@ -135,6 +146,7 @@ const cardsReducer = (state = {}, action) => {
 const cardReducer = (state, action) => {
     switch (action.type) {
         case 'ADD_CARD':
+        case 'WEBSOCKET_ADD_CARD':
             return { ...action.payload, }
         default:
             return state

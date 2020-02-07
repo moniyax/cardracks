@@ -11,7 +11,7 @@ import {WS_ROOT} from './constants';
 
 ReactDOM.render(
     <Provider store={Store}>
-    <ActionCableProvider url='/cable'>
+    <ActionCableProvider url={WS_ROOT}>
         <Router>
             <App />
         </Router>

@@ -1,6 +1,8 @@
-export const API_ROOT='http://localhost:3005';
-export const WS_ROOT='ws://localhost:3005/cable';
+export const REACT_APP_API_ROOT = process.env.REACT_APP_API_ROOT 
+export const WS_ROOT=`ws://${REACT_APP_API_ROOT}/cable`
 export const HEADERS = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
 };
+
+console.log('process.env.API_ROOT ', process.env );

@@ -8,6 +8,8 @@ import moveItem from "../../actions/MoveItem"
 import fetchRacks from "../../actions/FetchRacks"
 import apiMoveCardToRack from "../../actions/ApiMoveCardToRack"
 import Authentication from '../Authentication'
+import { ActionCable } from 'react-actioncable-provider';
+import webSocketRackCreated from "../../actions/WebSocketRackCreated"
 
 const BoardC = styled.div`
     display: flex;
@@ -52,12 +54,27 @@ class Board extends Component {
 
     }
 
+    handleReceived = (arg) => {
+        const boardId = this.props.match.params.id
+
+        const rack = JSON.parse(arg);
+        this.props.webSocketRackCreated(rack, rack.board_id)
+    };
+
     render() {
-        const { boards, match, racks } = this.props
+        const { boards, match, racks, auth } = this.props
         const board = boards[match.params.id]
         const { title, rackIds } = board
+
         return <Authentication>
             <BoardC >
+                <ActionCable
+                    channel={{
+                        channel: "RacksChannel",
+                        user_id: auth.user.id
+                    }}
+                    onReceived={this.handleReceived}
+                />
                 <BoardHeader>
                     <BoardName>{title}</BoardName>
                 </BoardHeader>
@@ -81,7 +98,6 @@ class Board extends Component {
                                 })}
                                 <AddRack boardId={board.id} />
                                 {provided.placeholder}
-
                             </Racks>)}
                     </Droppable>
                 </DragDropContext>
@@ -91,8 +107,8 @@ class Board extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return { boards: state.boards, racks: state.racks }
+const mapStateToProps = ({ boards, racks, auth }) => {
+    return { boards, racks, auth }
 }
 
-export default connect(mapStateToProps, { moveItem: moveItem, fetchRacks: fetchRacks, apiMoveCardToRack })(Board)
+export default connect(mapStateToProps, { moveItem: moveItem, fetchRacks: fetchRacks, apiMoveCardToRack, webSocketRackCreated })(Board)

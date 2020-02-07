@@ -11,6 +11,9 @@ class CardsController < ApplicationController
     @card = Card.new(card_params)
 
     if @card.save
+      ActionCable.server.broadcast(
+        "cards_channel_for_user_#{@current_user.id}",
+        @card.to_json)
       if @card.card_rack.update(card_order: params[:card_order])
         render json: @card, status: :created, location: @card
       else

@@ -34,6 +34,9 @@ class CardRacksController < ApplicationController
 
     @card_rack.card_order = []
     if @card_rack.save
+      ActionCable.server.broadcast(
+        "racks_channel_for_user_#{@current_user.id}",
+        @card_rack.to_json)
       @card_rack.board.rack_order = params[:rack_order]
       if @card_rack.board.save
         render json: @card_rack, status: :created, location: @card_rack
