@@ -5,4 +5,3 @@ export const HEADERS = {
   Accept: 'application/json',
 };
 
-console.log('process.env.API_ROOT ', process.env );
